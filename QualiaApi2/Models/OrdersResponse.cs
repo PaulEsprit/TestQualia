@@ -7,18 +7,21 @@ namespace QualiaApi2.Models
 {
 	public class OrderResponseType
 	{
-		public PlaceOrder PlaceOrder { get; set; }
+		public OrderInput Orders { get; set; }
 	}
 
-	public class PlaceOrder
+	public class OrderInput
 	{
-		public bool Success { get; set; }
-		public QualiaOrder Order { get; set; }
+		public List<QualiaGetOrder> Orders { get; set; }
 	}
 
-	public class QualiaOrder
+	public class QualiaGetOrder
 	{
 		[JsonProperty("_id")]
 		public string Id { get; set; }
+		public string Status { get; set; }
+
 	}
 }
+
+

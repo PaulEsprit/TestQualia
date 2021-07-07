@@ -82,9 +82,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<OrderResponseType> CreateOrder(string token, OrderRequest request)
+		public async Task<CreateOrderResponseType> CreateOrder(string token, CreateOrderRequest request)
 		{
-			GraphQLResponse<OrderResponseType> graphQLResponse = null;
+			GraphQLResponse<CreateOrderResponseType> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -141,12 +141,41 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendMutationAsync<OrderResponseType>(agenciesRequest);
+				graphQLResponse = await _client.SendMutationAsync<CreateOrderResponseType>(agenciesRequest);
 			}
 			catch (Exception e)
 			{
 
 			}
+			return graphQLResponse?.Data;
+		}
+
+		public async Task<OrderResponseType> GetOrders(string token, string status)
+		{
+			GraphQLResponse<OrderResponseType> graphQLResponse = null;
+			AddAuthorizationToken(token);
+			try
+			{
+				var ordersRequest = new GraphQLRequest
+				{
+					Query = @"
+						query($input: OrdersInput) 
+							{ orders(input: $input)
+								{ orders { _id  status  } } }",
+					OperationName = "",
+					Variables = new
+					{
+						input = new { status = status }
+					}
+				};
+
+				graphQLResponse = await _client.SendQueryAsync<OrderResponseType>(ordersRequest);
+			}
+			catch (Exception e)
+			{
+
+			}
+
 			return graphQLResponse?.Data;
 		}
 

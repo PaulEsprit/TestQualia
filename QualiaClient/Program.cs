@@ -13,12 +13,12 @@ namespace QualiaClient
 		static async Task Main(string[] args)
 		{
 			var service = new QualiaService2();
-
+			
 			var users = await service.GetUsers(_basicToken);
 
 			var agencies = await service.GetAgencies(_basicToken, "5xSJPE2uirpJmHqjo", "CA");
 
-			var orderRequest = new OrderRequest
+			var orderRequest = new CreateOrderRequest
 			{
 				AgencyId = "HMXscM3Dge3gJfqmb",
 				Contacts = new List<QualiaContact>
@@ -52,7 +52,9 @@ namespace QualiaClient
 				Purpose = "PURCHASE"
 			};
 
-			var order = service.CreateOrder(_basicToken, orderRequest);
+			var order = await service.CreateOrder(_basicToken, orderRequest);
+
+			var orders = await service.GetOrders(_basicToken, "Pending");
 
 
 			Console.ReadLine();
