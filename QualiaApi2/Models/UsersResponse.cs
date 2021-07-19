@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace QualiaApi2.Models
 {
-	public class UsersResponseType
+	public class UsersResponse
 	{
 		public UsersInOrganization UsersInOrganization { get; set; }
 	}

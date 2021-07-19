@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Http;
@@ -18,9 +19,9 @@ namespace QualiaApi2
 			_client = new GraphQLHttpClient(_graphQlUrl, new NewtonsoftJsonSerializer());
 		}
 
-		public async Task<UsersResponseType> GetUsers(string token)
+		public async Task<UsersResponse> GetUsers(string token)
 		{
-			GraphQLResponse<UsersResponseType> graphQLResponse = null;
+			GraphQLResponse<UsersResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -40,7 +41,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<UsersResponseType>(usersRequest);
+				graphQLResponse = await _client.SendQueryAsync<UsersResponse>(usersRequest);
 			}
 			catch (Exception e)
 			{
@@ -50,9 +51,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<AgenciesResponseType> GetAgencies(string token, string userId, string state)
+		public async Task<AgenciesResponse> GetAgencies(string token, string userId, string state)
 		{
-			GraphQLResponse<AgenciesResponseType> graphQLResponse = null;
+			GraphQLResponse<AgenciesResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -72,7 +73,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<AgenciesResponseType>(agenciesRequest);
+				graphQLResponse = await _client.SendQueryAsync<AgenciesResponse>(agenciesRequest);
 			}
 			catch (Exception e)
 			{
@@ -82,9 +83,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<CreateOrderResponseType> CreateOrder(string token, CreateOrderRequest request)
+		public async Task<CreateOrderResponse> CreateOrder(string token, CreateOrderRequest request)
 		{
-			GraphQLResponse<CreateOrderResponseType> graphQLResponse = null;
+			GraphQLResponse<CreateOrderResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -112,7 +113,7 @@ namespace QualiaApi2
 						last_name = contact.LastName
 					});
 				}
-				var agenciesRequest = new GraphQLRequest
+				var orderRequest = new GraphQLRequest
 				{
 					Query = @"
 							mutation($input: PlaceOrderInput) 
@@ -141,7 +142,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendMutationAsync<CreateOrderResponseType>(agenciesRequest);
+				graphQLResponse = await _client.SendMutationAsync<CreateOrderResponse>(orderRequest);
 			}
 			catch (Exception e)
 			{
@@ -150,9 +151,50 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<OrderResponseType> GetOrders(string token, string status)
+		public async Task<AddOrderBasicInfoResponse> AddOrderBasicInfo(string token, AddOrderBasicInfoRequest request)
 		{
-			GraphQLResponse<OrderResponseType> graphQLResponse = null;
+			GraphQLResponse<AddOrderBasicInfoResponse> graphQLResponse = null;
+			AddAuthorizationToken(token);
+			try
+			{
+
+				var data = new
+				{
+					estimated_close_date = request.Data.CloseDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+					loan_amount = request.Data.LoanAmount.ToString("##.###"),
+					purchase_price = request.Data.PurchasePrice.ToString("##.###")
+				};
+
+				var orderRequest = new GraphQLRequest
+				{
+					Query = @"
+							mutation($input: AddOrderBasicInfoInput!) { addOrderBasicInfo(input: $input)
+								{ order_id } 
+							}",
+					OperationName = "",
+					Variables = new
+					{
+						input = new
+						{
+							order_id = request.OrderId,
+							user_id = request.UserId,
+							data = data,
+						}
+					}
+				};
+
+				graphQLResponse = await _client.SendMutationAsync<AddOrderBasicInfoResponse>(orderRequest);
+			}
+			catch (Exception e)
+			{
+
+			}
+			return graphQLResponse?.Data;
+		}
+
+		public async Task<OrderResponse> GetOrders(string token, string status)
+		{
+			GraphQLResponse<OrderResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -169,7 +211,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<OrderResponseType>(ordersRequest);
+				graphQLResponse = await _client.SendQueryAsync<OrderResponse>(ordersRequest);
 			}
 			catch (Exception e)
 			{

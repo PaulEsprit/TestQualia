@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace QualiaApi2.Models
 {
-	public class AgenciesResponseType
+	public class AgenciesResponse
 	{
 		public SettlementAgencies AvailableSettlementAgencies { get; set; }
 	}

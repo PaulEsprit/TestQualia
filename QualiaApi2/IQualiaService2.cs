@@ -9,10 +9,11 @@ namespace QualiaApi2
 {
 	public interface IQualiaService2
 	{
-		Task<UsersResponseType> GetUsers(string token);
-		Task<AgenciesResponseType> GetAgencies(string token, string userId, string state);
-		Task<OrderResponseType> CreateOrder(string token, CreateOrderRequest request);
-		Task<CreateOrderResponseType> GetOrders(string token, string status);
+		Task<UsersResponse> GetUsers(string token);
+		Task<AgenciesResponse> GetAgencies(string token, string userId, string state);
+		Task<OrderResponse> CreateOrder(string token, CreateOrderRequest request);
+		Task<CreateOrderResponse> GetOrders(string token, string status);
+		Task<AddOrderBasicInfoResponse> AddOrderBasicInfo(string token, AddOrderBasicInfoRequest request);
 
 	}
 }

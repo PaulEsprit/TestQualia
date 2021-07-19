@@ -52,7 +52,20 @@ namespace QualiaClient
 				Purpose = "PURCHASE"
 			};
 
-			var order = await service.CreateOrder(_basicToken, orderRequest);
+			//var order = await service.CreateOrder(_basicToken, orderRequest);
+
+			var basicInfoRequest = new AddOrderBasicInfoRequest
+			{
+				OrderId = "B4wqfCc2C6GPF4z5F",
+				UserId = "5xSJPE2uirpJmHqjo",
+				Data =  new AddOrderBasicInfoData
+				{
+					CloseDate = DateTime.Now.AddYears(2),
+					LoanAmount = (decimal)3322.33,
+					PurchasePrice = (decimal)4433.44
+				}
+			};
+			var orderInfo = await service.AddOrderBasicInfo(_basicToken, basicInfoRequest);
 
 			var orders = await service.GetOrders(_basicToken, "Pending");
 
