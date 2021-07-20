@@ -14,6 +14,7 @@ namespace QualiaApi2
 		Task<OrderResponse> CreateOrder(string token, CreateOrderRequest request);
 		Task<CreateOrderResponse> GetOrders(string token, string status);
 		Task<AddOrderBasicInfoResponse> AddOrderBasicInfo(string token, AddOrderBasicInfoRequest request);
+		Task<UploadDocumentsResponse> UploadDocuments(string token, UploadDocumentsRequest request);
 
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Http;
@@ -184,6 +185,52 @@ namespace QualiaApi2
 				};
 
 				graphQLResponse = await _client.SendMutationAsync<AddOrderBasicInfoResponse>(orderRequest);
+			}
+			catch (Exception e)
+			{
+
+			}
+			return graphQLResponse?.Data;
+		}
+
+		public async Task<UploadDocumentsResponse> UploadDocuments(string token, UploadDocumentsRequest request)
+		{
+			GraphQLResponse<UploadDocumentsResponse> graphQLResponse = null;
+			AddAuthorizationToken(token);
+			try
+			{
+
+				var attachments = request.Attachments.Select(x => new
+				{
+					name = x.Name,
+					base_64 = Convert.ToBase64String(x.File),
+					mime = x.Mime
+				}).ToArray();
+
+				var orderRequest = new GraphQLRequest
+				{
+					Query = @"
+							mutation CreateThread($input: CreateThreadInput!) {
+								createThread(input: $input)
+									{ thread_id message_id }
+							}",
+					OperationName = "CreateThread",
+					Variables = new
+					{
+						input = new
+						{
+							order_id = request.OrderId,
+							settlement_agency_on_thread = request.AgencyOnThread,
+							message_sender_id = request.MessageSenderId,
+							connect_user_ids = request.ConnectedUserIds.ToArray(),
+							subject = request.Subject,
+							message = request.Message,
+							attachments = attachments,
+						}
+					}
+				};
+
+				graphQLResponse = await _client.SendMutationAsync<UploadDocumentsResponse>(orderRequest);
 			}
 			catch (Exception e)
 			{

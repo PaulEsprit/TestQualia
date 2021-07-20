@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using GraphQL;
 using QualiaApi2;
@@ -65,7 +66,36 @@ namespace QualiaClient
 					PurchasePrice = (decimal)4433.44
 				}
 			};
-			var orderInfo = await service.AddOrderBasicInfo(_basicToken, basicInfoRequest);
+			//var orderInfo = await service.AddOrderBasicInfo(_basicToken, basicInfoRequest);
+
+			var uploadDocs = new UploadDocumentsRequest
+			{
+				OrderId = "B4wqfCc2C6GPF4z5F",
+				MessageSenderId = "5xSJPE2uirpJmHqjo",
+				AgencyOnThread = true,
+				ConnectedUserIds = new List<string>(),
+				Message = "Docs from transaction 1213123123",
+				Subject = "My Docs",
+				Attachments = new List<QualiaAttachment>
+				{
+					new QualiaAttachment
+					{
+						Name = "My1.txt",
+						Mime = QualiaMime.TXT,
+						File = File.ReadAllBytes(@"E:\Test\propy\test.txt")
+
+					},
+					new QualiaAttachment
+					{
+						Name = "5e4c20977ed6df095f8dba42_1.pdf",
+						Mime = QualiaMime.PDF,
+						File = File.ReadAllBytes(@"E:\Test\propy\pdfs\Tests\5e4c20977ed6df095f8dba42_1.pdf")
+
+					},
+				}
+			};
+
+			var docsResp = await service.UploadDocuments(_basicToken, uploadDocs);
 
 			var orders = await service.GetOrders(_basicToken, "Pending");
 
