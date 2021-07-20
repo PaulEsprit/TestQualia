@@ -212,7 +212,7 @@ namespace QualiaApi2
 					Query = @"
 							mutation CreateThread($input: CreateThreadInput!) {
 								createThread(input: $input)
-									{ thread_id message_id }
+									{ success thread_id message_id }
 							}",
 					OperationName = "CreateThread",
 					Variables = new

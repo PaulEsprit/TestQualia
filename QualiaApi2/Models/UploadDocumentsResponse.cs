@@ -7,10 +7,10 @@ namespace QualiaApi2.Models
 {
 	public class UploadDocumentsResponse
 	{
-		private CreateThread CreateThread { get; set; }
+		public QualiaThread CreateThread { get; set; }
 	}
 
-	public class CreateThread
+	public class QualiaThread
 	{
 		public bool Success { get; set; }
 		[JsonProperty("thread_id")]
