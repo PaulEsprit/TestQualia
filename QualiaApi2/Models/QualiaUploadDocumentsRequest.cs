@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QualiaApi2.Models
 {
-	public class UploadDocumentsRequest
+	public class QualiaUploadDocumentsRequest
 	{
 		public string OrderId { get; set; }
 		public bool AgencyOnThread { get; set; }

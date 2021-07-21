@@ -19,7 +19,7 @@ namespace QualiaClient
 
 			var agencies = await service.GetAgencies(_basicToken, "5xSJPE2uirpJmHqjo", "CA");
 
-			var orderRequest = new CreateOrderRequest
+			var orderRequest = new QualiaCreateOrderRequest
 			{
 				AgencyId = "HMXscM3Dge3gJfqmb",
 				Contacts = new List<QualiaContact>
@@ -55,11 +55,11 @@ namespace QualiaClient
 
 			//var order = await service.CreateOrder(_basicToken, orderRequest);
 
-			var basicInfoRequest = new AddOrderBasicInfoRequest
+			var basicInfoRequest = new QualiaAddOrderBasicInfoRequest
 			{
 				OrderId = "B4wqfCc2C6GPF4z5F",
 				UserId = "5xSJPE2uirpJmHqjo",
-				Data =  new AddOrderBasicInfoData
+				Data =  new QualiaAddOrderBasicInfoData
 				{
 					CloseDate = DateTime.Now.AddYears(2),
 					LoanAmount = (decimal)3322.33,
@@ -68,7 +68,7 @@ namespace QualiaClient
 			};
 			//var orderInfo = await service.AddOrderBasicInfo(_basicToken, basicInfoRequest);
 
-			var uploadDocs = new UploadDocumentsRequest
+			var uploadDocs = new QualiaUploadDocumentsRequest
 			{
 				OrderId = "B4wqfCc2C6GPF4z5F",
 				MessageSenderId = "5xSJPE2uirpJmHqjo",
@@ -97,7 +97,7 @@ namespace QualiaClient
 
 			var docsResp = await service.UploadDocuments(_basicToken, uploadDocs);
 
-			var orders = await service.GetOrders(_basicToken, "Pending");
+			var orders = await service.GetOrders(_basicToken, "Open");
 
 
 			Console.ReadLine();

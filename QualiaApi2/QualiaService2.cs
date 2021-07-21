@@ -10,7 +10,7 @@ using QualiaApi2.Models;
 
 namespace QualiaApi2
 {
-	public class QualiaService2
+	public class QualiaService2: IQualiaService2
 	{
 		private readonly string _graphQlUrl = "https://sandbox-connect.qualia.io/api/partner/graphql";
 		private readonly GraphQLHttpClient _client;
@@ -20,9 +20,9 @@ namespace QualiaApi2
 			_client = new GraphQLHttpClient(_graphQlUrl, new NewtonsoftJsonSerializer());
 		}
 
-		public async Task<UsersResponse> GetUsers(string token)
+		public async Task<QualiaUsersResponse> GetUsers(string token)
 		{
-			GraphQLResponse<UsersResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaUsersResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -42,7 +42,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<UsersResponse>(usersRequest);
+				graphQLResponse = await _client.SendQueryAsync<QualiaUsersResponse>(usersRequest);
 			}
 			catch (Exception e)
 			{
@@ -52,9 +52,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<AgenciesResponse> GetAgencies(string token, string userId, string state)
+		public async Task<QualiaAgenciesResponse> GetAgencies(string token, string userId, string state)
 		{
-			GraphQLResponse<AgenciesResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaAgenciesResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -74,7 +74,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<AgenciesResponse>(agenciesRequest);
+				graphQLResponse = await _client.SendQueryAsync<QualiaAgenciesResponse>(agenciesRequest);
 			}
 			catch (Exception e)
 			{
@@ -84,9 +84,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<CreateOrderResponse> CreateOrder(string token, CreateOrderRequest request)
+		public async Task<QualiaCreateOrderResponse> CreateOrder(string token, QualiaCreateOrderRequest request)
 		{
-			GraphQLResponse<CreateOrderResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaCreateOrderResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -143,7 +143,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendMutationAsync<CreateOrderResponse>(orderRequest);
+				graphQLResponse = await _client.SendMutationAsync<QualiaCreateOrderResponse>(orderRequest);
 			}
 			catch (Exception e)
 			{
@@ -152,9 +152,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<AddOrderBasicInfoResponse> AddOrderBasicInfo(string token, AddOrderBasicInfoRequest request)
+		public async Task<QualiaAddOrderBasicInfoResponse> AddOrderBasicInfo(string token, QualiaAddOrderBasicInfoRequest request)
 		{
-			GraphQLResponse<AddOrderBasicInfoResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaAddOrderBasicInfoResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -184,7 +184,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendMutationAsync<AddOrderBasicInfoResponse>(orderRequest);
+				graphQLResponse = await _client.SendMutationAsync<QualiaAddOrderBasicInfoResponse>(orderRequest);
 			}
 			catch (Exception e)
 			{
@@ -193,9 +193,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<UploadDocumentsResponse> UploadDocuments(string token, UploadDocumentsRequest request)
+		public async Task<QualiaUploadDocumentsResponse> UploadDocuments(string token, QualiaUploadDocumentsRequest request)
 		{
-			GraphQLResponse<UploadDocumentsResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaUploadDocumentsResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -204,7 +204,7 @@ namespace QualiaApi2
 				{
 					name = x.Name,
 					base_64 = Convert.ToBase64String(x.File),
-					mime = x.Mime
+					mime = x.Mime.ToString()
 				}).ToArray();
 
 				var orderRequest = new GraphQLRequest
@@ -230,7 +230,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendMutationAsync<UploadDocumentsResponse>(orderRequest);
+				graphQLResponse = await _client.SendMutationAsync<QualiaUploadDocumentsResponse>(orderRequest);
 			}
 			catch (Exception e)
 			{
@@ -239,9 +239,9 @@ namespace QualiaApi2
 			return graphQLResponse?.Data;
 		}
 
-		public async Task<OrderResponse> GetOrders(string token, string status)
+		public async Task<QualiaOrderResponse> GetOrders(string token, string status)
 		{
-			GraphQLResponse<OrderResponse> graphQLResponse = null;
+			GraphQLResponse<QualiaOrderResponse> graphQLResponse = null;
 			AddAuthorizationToken(token);
 			try
 			{
@@ -258,7 +258,7 @@ namespace QualiaApi2
 					}
 				};
 
-				graphQLResponse = await _client.SendQueryAsync<OrderResponse>(ordersRequest);
+				graphQLResponse = await _client.SendQueryAsync<QualiaOrderResponse>(ordersRequest);
 			}
 			catch (Exception e)
 			{

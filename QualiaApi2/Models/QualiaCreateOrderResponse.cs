@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace QualiaApi2.Models
 {
-	public class CreateOrderResponse
+	public class QualiaCreateOrderResponse
 	{
-		public PlaceOrder PlaceOrder { get; set; }
+		public QualiaPlaceOrder PlaceOrder { get; set; }
 	}
 
-	public class PlaceOrder
+	public class QualiaPlaceOrder
 	{
 		public bool Success { get; set; }
 		public QualiaOrder Order { get; set; }

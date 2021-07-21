@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace QualiaApi2.Models
 {
-	public class UploadDocumentsResponse
+	public class QualiaUploadDocumentsResponse
 	{
 		public QualiaThread CreateThread { get; set; }
 	}

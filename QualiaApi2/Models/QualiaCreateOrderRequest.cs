@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QualiaApi2.Models
 {
-	public class CreateOrderRequest
+	public class QualiaCreateOrderRequest
 	{
 		public string Purpose { get; set; }
 		public string AgencyId { get; set; }

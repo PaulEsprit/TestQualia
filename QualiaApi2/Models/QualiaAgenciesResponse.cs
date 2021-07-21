@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace QualiaApi2.Models
 {
-	public class AgenciesResponse
+	public class QualiaAgenciesResponse
 	{
-		public SettlementAgencies AvailableSettlementAgencies { get; set; }
+		public QualiaSettlementAgencies AvailableSettlementAgencies { get; set; }
 	}
 
-	public class SettlementAgencies
+	public class QualiaSettlementAgencies
 	{
 		[JsonProperty("settlement_agencies")]
 		public List<QualiaAgency> Agencies { get; set; }

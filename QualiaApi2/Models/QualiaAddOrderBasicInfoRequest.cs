@@ -4,14 +4,14 @@ using System.Text;
 
 namespace QualiaApi2.Models
 {
-	public class AddOrderBasicInfoRequest
+	public class QualiaAddOrderBasicInfoRequest
 	{
 		public string OrderId { get; set; }
 		public string UserId { get; set; }
-		public AddOrderBasicInfoData Data { get; set; }
+		public QualiaAddOrderBasicInfoData Data { get; set; }
 	}
 
-	public class AddOrderBasicInfoData
+	public class QualiaAddOrderBasicInfoData
 	{
 		public DateTime CloseDate { get; set; }
 		public decimal LoanAmount { get; set; }
